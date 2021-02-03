@@ -1,9 +1,11 @@
+import { rerenderEntireTree } from '../renders';
+
 export type stateType = {
   profilePageData: {
     postsData: Array<PostsDataType>
 
   }
-  messagesPageData: {
+  dialogsPageData: {
     dialogsData: Array<DialogItemType>
     messagesData: Array<MessageDataType>
   }
@@ -29,7 +31,7 @@ export const state: stateType = {
       {id:2, message:'hi how are you',likes: 12}
     ]
   },
-  messagesPageData: {
+  dialogsPageData: {
     messagesData: [
       {id:1, message: 'Hi'},
       {id:2 ,message: 'How it-kams'},
@@ -48,4 +50,12 @@ export const state: stateType = {
 
 };
 
-
+export const addPost = (postMessage: string): void => {
+  const newPost = {
+    id: 4,
+    message: postMessage,
+    likes: 0
+  };
+  state.profilePageData.postsData.push(newPost);
+  rerenderEntireTree(state);
+};
