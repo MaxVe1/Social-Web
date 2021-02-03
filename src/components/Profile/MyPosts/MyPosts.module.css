@@ -1,0 +1,18 @@
+.postBlock {
+    padding: 10px;
+}
+
+.postEdit {
+    margin-bottom: 30px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.postEdit textarea {
+    width: 50%;
+    resize: none;
+}
+
+.postEdit button {
+    width: 15%;
+}

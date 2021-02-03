@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="30436f06-94be-467a-9b39-464c0bf4b8ec" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1nyCGGHgBJZlMIvXaigNsue6QQI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ChangesTree.GroupingKeys" value="directory" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30436f06-94be-467a-9b39-464c0bf4b8ec" name="Default Changelist" comment="" />
+      <created>1612352845672</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612352845672</updated>
+      <workItem from="1612352846681" duration="1341000" />
+      <workItem from="1612356211329" duration="2380000" />
+    </task>
+    <task id="LOCAL-00001" summary="video 29">
+      <created>1612356304261</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612356304261</updated>
+    </task>
+    <task id="LOCAL-00002" summary="video 29">
+      <created>1612358443919</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1612358443919</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/components/Header/Header.jsx" />
+        <option value="$PROJECT_DIR$/components/Navbar/Navbar.jsx" />
+        <option value="$PROJECT_DIR$/components/Profile/Profile.jsx" />
+        <option value="$PROJECT_DIR$/components/Dialogs/Dialogs.jsx" />
+        <option value="$PROJECT_DIR$/components/Profile/ProfileInfo/ProfileInfo.jsx" />
+        <option value="$PROJECT_DIR$/components/Dialogs/Message/Message.jsx" />
+        <option value="$PROJECT_DIR$/components/Profile/MyPosts/Post/Post.jsx" />
+        <option value="$PROJECT_DIR$/components/Dialogs/DialogItem/DialogItem.jsx" />
+        <option value="$PROJECT_DIR$/components/Profile/MyPosts/MyPosts.jsx" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="video 29" />
+    <option name="LAST_COMMIT_MESSAGE" value="video 29" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="786" y="0" key="CommitChangelistDialog2" timestamp="1612358443205">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="786" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1612358443205" />
+    <state x="175" y="102" key="DiffContextDialog" timestamp="1612358487758">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="175" y="102" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1612358487758" />
+    <state x="455" y="231" key="Vcs.Push.Dialog.v2" timestamp="1612358658447">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="455" y="231" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1612358658447" />
+  </component>
+</project>

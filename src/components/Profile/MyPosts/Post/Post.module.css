@@ -1,0 +1,17 @@
+
+.item  {
+    margin-bottom: 15px;
+    color: greenyellow;
+}
+
+.item:last-child {
+    margin-bottom: 0;
+}
+
+.item_img {
+    width: 50px !important;
+    height: 50px;
+    border-radius: 25px;
+    object-fit: cover;
+}
+

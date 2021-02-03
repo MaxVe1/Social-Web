@@ -1,0 +1,31 @@
+.fri a {color: white;
+        text-decoration:none
+}
+.fri{
+   /* border: 1px solid red;*/
+    width:165px;
+    padding: 5px 0px 5px;
+}
+
+.fri_item{
+    /*display: flex;*/
+    flex-direction: column;
+    /**border: 1px solid blue;*/
+    width: 50px;
+    text-align: center;
+    align-items: center;
+    float: left;
+    margin: 2px;
+}
+
+.fri_item img{
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    /**border: 1px solid black;*/
+}
+
+.fri_text{
+    text-align:center;
+    /*border: 1px solid black;*/
+}
