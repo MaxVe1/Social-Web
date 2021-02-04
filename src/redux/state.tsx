@@ -1,5 +1,7 @@
-import { rerenderEntireTree } from '../renders';
-
+//import { rerenderEntireTree } from '../renders';
+let rerenderEntireTree = (state: stateType) => {
+  console.log('State changed');
+}
 export type stateType = {
   profilePageData: {
     postsData: Array<PostsDataType>
@@ -52,6 +54,7 @@ export const state: stateType = {
 
 };
 
+
 export const addPost = (): void => {
   const newPost = {
     id: 4,
@@ -59,8 +62,8 @@ export const addPost = (): void => {
     likes: 0
   };
   state.profilePageData.postsData.push(newPost);
-  state.profilePageData.newPostText = "";
-  rerenderEntireTree(state);
+  //state.profilePageData.newPostText = "";
+  rerenderEntireTree( state );
 };
 export const updateNewPostText = (newText: string): void => {
   const newPost = {
@@ -71,3 +74,6 @@ export const updateNewPostText = (newText: string): void => {
   state.profilePageData.newPostText = newText;
   rerenderEntireTree(state);
 };
+export const subscribe = (observer:  () => void) => {
+      rerenderEntireTree = observer;
+}
