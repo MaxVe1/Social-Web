@@ -61,8 +61,8 @@ export const store = {
       likes: 0
     };
     this._state.profilePageData.postsData.push(newPost);
-    //state.profilePageData.newPostText = "";
-    //rerenderEntireTree( state );
+    this._state.profilePageData.newPostText = "";
+     this._callSubscriber(this._state);
   },
   updateNewPostText (newText: string): void  {
     const newPost = {
@@ -71,7 +71,7 @@ export const store = {
       likes: 0
     };
     this._state.profilePageData.newPostText = newText;
-    //rerenderEntireTree(state);
+    this._callSubscriber(this._state);
   },
   _callSubscriber (state: stateType) {
     console.log("State render")
