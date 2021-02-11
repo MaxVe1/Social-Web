@@ -1,5 +1,3 @@
-//import { rerenderEntireTree } from '../renders';
-
 export type stateType = {
   profilePageData: {
     postsData: Array<PostsDataType>
@@ -23,6 +21,10 @@ export type MessageDataType = {
 export type DialogItemType = {
   name: string
   id: number
+}
+export type ActionType = {
+  type: string
+  newText?: string
 }
 
 export const store = {
@@ -51,28 +53,23 @@ export const store = {
       ]
     }
   },
-   //rerenderEntireTree(state: stateType){
- //   console.log('State changed');
- // },
-   addPost(): void {
-    const newPost = {
-      id: 4,
-      message: this._state.profilePageData.newPostText,
-      likes: 0
-    };
-    this._state.profilePageData.postsData.push(newPost);
-    this._state.profilePageData.newPostText = "";
+
+  dispatch(action: ActionType){
+   if(action.type==='ADD-POST'){
+     const newPost = {
+       id: 4,
+       message: this._state.profilePageData.newPostText,
+       likes: 0
+     };
+     this._state.profilePageData.postsData.push(newPost);
+     this._state.profilePageData.newPostText = "";
      this._callSubscriber(this._state);
-  },
-  updateNewPostText (newText: string): void  {
-    const newPost = {
-      id: 4,
-      message: postMessage,
-      likes: 0
-    };
-    this._state.profilePageData.newPostText = newText;
-    this._callSubscriber(this._state);
-  },
+   } else if(action.type === "UPDATE-NEW-POST-TEXT"){
+     if(action.newText){
+     this._state.profilePageData.newPostText = action.newText;
+     this._callSubscriber(this._state);
+   }
+  }},
   _callSubscriber (state: stateType) {
     console.log("State render")
   },
@@ -85,6 +82,7 @@ export const store = {
 }
 
 export default store;
+
 
 
 

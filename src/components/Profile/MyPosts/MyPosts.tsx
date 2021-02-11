@@ -1,14 +1,13 @@
 import React from 'react';
 import Post from './Post/Post';
 import classes from './MyPosts.module.css';
-import {PostsDataType} from '../../../redux/state';
+import {PostsDataType,ActionType} from '../../../redux/state';
 import {ProfilePropsType} from "../Profile";
 
 type MyPostsPropsType = {
     posts: Array<PostsDataType>
-    addPost: () => void
     newPostText: string
-    updateNewPostText: (value: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -16,13 +15,15 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
 
     const addPost = () => {
-        props.addPost()
+        props.dispatch({type: "ADD-POST"})
+        //props.addPost()
     };
     const onPostChangeHandler = () => {
         const text = newPostElement.current?.value;
 
         if (text) {
-            props.updateNewPostText(text);
+            props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: text});
+            //props.updateNewPostText(text);
         }
     }
 
