@@ -26,6 +26,9 @@ export type ActionType = {
   type: string
   newText?: string
 }
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+
 
 export const store = {
   _state: {
@@ -79,6 +82,19 @@ export const store = {
   getState(): stateType {
     return this._state;
   },
+}
+
+export const addPostActionCreator = () => {
+  return {
+    type: 'ADD-POST'
+  }
+}
+export const updateNewPostTextActionCreator = (text:string) => {
+  return {
+    type: "UPDATE-NEW-POST-TEXT",
+    newText: text
+  }
+
 }
 
 export default store;
