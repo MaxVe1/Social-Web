@@ -7,6 +7,7 @@ export type stateType = {
   dialogsPageData: {
     dialogsData: Array<DialogItemType>
     messagesData: Array<MessageDataType>
+    newMessageText: string
   }
 }
 export type PostsDataType = {
@@ -28,6 +29,8 @@ export type ActionType = {
 }
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SEND_MESSAGE = "SEND-MESSAGE";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
 
 
 export const store = {
@@ -53,7 +56,8 @@ export const store = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Viktor'},
         {id: 6, name: 'Valera'}
-      ]
+      ],
+      newMessageText: ''
     }
   },
 
@@ -71,8 +75,24 @@ export const store = {
      if(action.newText){
      this._state.profilePageData.newPostText = action.newText;
      this._callSubscriber(this._state);
-   }
-  }},
+   }}
+     else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+       if (action.newText) {
+         this._state.dialogsPageData.newMessageText = action.newText;
+         this._callSubscriber(this._state);
+       }
+     } else if (action.type === SEND_MESSAGE) {
+       const newMessage = {
+         id: this._state.dialogsPageData.messagesData.length + 1,
+         message: this._state.dialogsPageData.newMessageText
+       }
+
+       this._state.dialogsPageData.messagesData.push(newMessage);
+       this._state.dialogsPageData.newMessageText = "";
+       this._callSubscriber(this._state);
+     }
+
+   },
   _callSubscriber (state: stateType) {
     console.log("State render")
   },
@@ -95,6 +115,17 @@ export const updateNewPostTextActionCreator = (text:string) => {
     newText: text
   }
 
+}
+export const sendMessageCreator = (): ActionType => {
+  return {
+    type: SEND_MESSAGE
+  }
+}
+export const updateNewMessageCreator = (messageText: string): ActionType => {
+  return {
+    type: UPDATE_NEW_MESSAGE_TEXT,
+    newText: messageText
+  }
 }
 
 export default store;

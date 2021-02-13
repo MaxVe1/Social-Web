@@ -4,28 +4,26 @@ import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
-import { Dialogs } from './components/Dialogs/Dialogs';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {Dialogs} from './components/Dialogs/Dialogs';
+import {Route} from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import Music from './components/Music/Music';
 import News from './components/News/News';
-import { stateType, ActionType, } from './redux/state';
+import {ActionType, stateType} from './redux/state';
 
 type AppPropsType = {
   state: stateType
   dispatch: (action: ActionType) => void
 }
 
-
-const App = (props: AppPropsType) => {
+const App: React.FC<AppPropsType> = (props) => {
   return (
-    <BrowserRouter>
       <div className="app-wrapper">
-        <Header />
-        <Navbar />
+        <Header/>
+        <Navbar/>
         <div className="app-wrapper-content">
           <Route path="/dialogs"
-                 render={() => <Dialogs data={props.state.dialogsPageData} />}
+                 render={() => <Dialogs data={props.state.dialogsPageData} dispatch={props.dispatch}/>}
           />
           <Route path="/profile"
                  render={() => <Profile
@@ -33,13 +31,11 @@ const App = (props: AppPropsType) => {
                      dispatch={props.dispatch}
                  />}
           />
-          <Route path="/news" component={News} />
-          <Route path="/music" component={Music} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/news" component={News}/>
+          <Route path="/music" component={Music}/>
+          <Route path="/settings" component={Settings}/>
         </div>
       </div>
-    </BrowserRouter>
-
   );
 };
 
