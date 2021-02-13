@@ -1,15 +1,22 @@
-export type stateType = {
-  profilePageData: {
-    postsData: Array<PostsDataType>
-    newPostText: string
+import { profilePageReducer } from "./profilePageReducer";
+import { dialogsPageReducer } from "./dialogsPageReducer";
 
-  }
-  dialogsPageData: {
-    dialogsData: Array<DialogItemType>
-    messagesData: Array<MessageDataType>
+
+export type stateType = {
+  profilePageData: profilePageDataType;
+  dialogsPageData: dialogsPageDataType;
+ };
+export type profilePageDataType = {
+  postsData: Array<PostsDataType>;
+  newPostText: string;
+};
+
+ export type dialogsPageDataType= {
+    dialogsData: Array<DialogItemType>;
+    messagesData: Array<MessageDataType>;
     newMessageText: string
   }
-}
+
 export type PostsDataType = {
   id: number
   message: string
@@ -27,10 +34,10 @@ export type ActionType = {
   type: string
   newText?: string
 }
-const ADD_POST = "ADD-POST";
+/*const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SEND_MESSAGE = "SEND-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";*/
 
 
 export const store = {
@@ -60,8 +67,14 @@ export const store = {
       newMessageText: ''
     }
   },
+  dispatch(action: ActionType) {
+    this._state.profilePageData = profilePageReducer(this._state.profilePageData, action);
+    this._state.dialogsPageData = dialogsPageReducer(this._state.dialogsPageData, action);
+    this._callSubscriber(this._state);
 
-  dispatch(action: ActionType){
+
+  },
+  /*dispatch(action: ActionType){
    if(action.type==='ADD-POST'){
      const newPost = {
        id: 4,
@@ -92,7 +105,7 @@ export const store = {
        this._callSubscriber(this._state);
      }
 
-   },
+   },*/
   _callSubscriber (state: stateType) {
     console.log("State render")
   },
@@ -103,7 +116,7 @@ export const store = {
     return this._state;
   },
 }
-
+/**
 export const addPostActionCreator = () => {
   return {
     type: 'ADD-POST'
@@ -126,8 +139,7 @@ export const updateNewMessageCreator = (messageText: string): ActionType => {
     type: UPDATE_NEW_MESSAGE_TEXT,
     newText: messageText
   }
-}
-
+}*/
 export default store;
 
 

@@ -4,7 +4,8 @@ import { Message } from './Message/Message';
 import { DialogItem } from './DialogItem/DialogItem';
 
 import classes from './Dialogs.module.css';
-import { DialogItemType, MessageDataType, sendMessageCreator, ActionType, updateNewMessageCreator } from '../../redux/state';
+import { DialogItemType, MessageDataType, ActionType } from '../../redux/state';
+import {sendMessageCreator, updateNewMessageCreator} from "../../redux/dialogsPageReducer";
 
 type DialogsPropsType = {
   data: {
