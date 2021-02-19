@@ -11,4 +11,6 @@ const reducers = combineReducers({
 
 
 
-export let store = createStore(reducers);
+export const store = createStore(reducers);
+
+export type StoreType = typeof store;
