@@ -8,11 +8,11 @@ export type ProfilePropsType = {
    store: StoreType
 }
 
-const Profile = (props: ProfilePropsType) => {
+const Profile = () => {
     return (
         <main>
             <ProfileInfo />
-            <MyPostsContainer store={props.store} />
+            <MyPostsContainer/>
         </main>
 
     );
