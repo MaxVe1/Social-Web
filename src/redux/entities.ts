@@ -14,7 +14,9 @@ export type dialogsPageDataType = {
     messagesData: Array<MessageDataType>;
     newMessageText: string;
 };
-
+export type UsersPageDataType = {
+    users: Array<UserType>;
+};
 // /Main Types
 
 export type PostsDataType = {
@@ -35,4 +37,17 @@ export type DialogItemType = {
 export type ActionType = {
     type: string;
     newText?: string;
-}; 
+};
+
+export type UserType = {
+    id: number;
+    userLogo: string;
+    followed: boolean,
+    fullName: string;
+    status: string;
+    location: UserLocationType;
+};
+type UserLocationType = {
+    city: string;
+    country: string;
+};
