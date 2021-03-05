@@ -15,13 +15,13 @@ type UsersPropsType = {
 
 export const Users = (props: UsersPropsType) => {
 
-
+let getUsers = () => {
     if (!props.users.length) {
         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
             props.setUsers(response.data.items)
         })
     }
-
+}
         /*props.setUsers([
         {
             id: 1,
@@ -58,7 +58,7 @@ export const Users = (props: UsersPropsType) => {
         }
     ]);*/
     return   <div>
-
+        <button onClick={getUsers}>Get Users</button>
         {props.users.map((u) => {
 
             return (
