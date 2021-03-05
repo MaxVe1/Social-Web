@@ -9,8 +9,9 @@ import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import {StoreType} from "./redux/reduxStore";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {Users} from "./components/Users/Users";
 import {UsersContainer} from "./components/Users/UsersContainer";
+import {Users} from "./components/Users/Users";
+
 
 /*type AppPropsType = {
     store: StoreType
@@ -33,7 +34,7 @@ const App: React.FC  = () => {
                 />
                 <Route
                     path="/users"
-                    render={() => <UsersContainer  />}
+                    render={() => <UsersContainer/>}
                 />
                 <Route path="/news" component={News} />
                 <Route path="/music" component={Music} />
