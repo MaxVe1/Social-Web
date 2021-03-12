@@ -4,64 +4,47 @@ type FollowACType = {
     type: typeof FOLLOW;
     userId: number
 };
-
 type UnFollowACType = {
     type: typeof UNFOLLOW;
     userId: number
 };
 
-type SetUsersAC = {
+type SetUsersACT = {
     type: typeof SET_USERS,
     users: Array<UserType>
 }
 
-type ActionsType = FollowACType | UnFollowACType | SetUsersAC;
+type SetCurrentPageACT = {
+    type: typeof SET_CURRENT_PAGE,
+    currentPage: number
+}
+
+type SetTotalUsersCountACT = {
+    type: typeof SET_TOTAL_USERS_COUNT,
+    totalUsersCount: number
+}
+
+
+type ActionsType = FollowACType | UnFollowACType | SetUsersACT | SetCurrentPageACT | SetTotalUsersCountACT;
 
 const initialState: UsersPageDataType = {
-    users: [ /*{
-        id: 1,
-        photoUrl: "https://www.google.by/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FDmitry_Nagiyev&psig=AOvVaw3pvaXenuXB6E4egXd3uyDd&ust=1614682483620000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMi2_ZD3ju8CFQAAAAAdAAAAABAD"
-        followed: false,
-        fullName: "Yehor",
-        status: "I am a BOSS!!",
-        location: {
-            city: "Zaporozhye",
-            country: "Ukraine"
-        }
-    },
-        {
-            id: 2,
-            photoUrl:"https://www.google.by/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FDmitry_Nagiyev&psig=AOvVaw3pvaXenuXB6E4egXd3uyDd&ust=1614682483620000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMi2_ZD3ju8CFQAAAAAdAAAAABAD"
-            followed: true,
-            fullName: "Dima",
-            status: "I am a BOSS!!",
-            location: {
-                city: "Minsk",
-                country: "Belarus"
-            }
-        },
-        {
-            id: 3,
-            photoUrl: "https://www.google.by/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FDmitry_Nagiyev&psig=AOvVaw3pvaXenuXB6E4egXd3uyDd&ust=1614682483620000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMi2_ZD3ju8CFQAAAAAdAAAAABAD"
-            followed: false,
-            fullName: "Tania",
-            status: "I am a BOSS!!",
-            location: {
-                city: "Moscow",
-                country: "Russia"
-            }
-        } */]
+    users: [],
+    pageSize: 100,
+    totalUsersCount: 0,
+    currentPage: 1,
 };
 
 const FOLLOW: "FOLLOW" = "FOLLOW";
 const UNFOLLOW: "UNFOLLOW" = "UNFOLLOW";
 const SET_USERS: "SET-USERS" = "SET-USERS";
+const SET_CURRENT_PAGE: "SET-CURRENT-PAGE" = "SET-CURRENT-PAGE";
+const SET_TOTAL_USERS_COUNT: "SET-TOTAL-USERS-COUNT" = "SET-TOTAL-USERS-COUNT";
 
 export const usersReducer = (state: UsersPageDataType = initialState, action: ActionsType): UsersPageDataType => {
     switch (action.type) {
         case FOLLOW:
             return {
-               ...state,
+                ...state,
                 users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
             }
         case UNFOLLOW:
@@ -72,7 +55,17 @@ export const usersReducer = (state: UsersPageDataType = initialState, action: Ac
         case SET_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
+            }
+        case SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        case SET_TOTAL_USERS_COUNT:
+            return {
+                ...state,
+                totalUsersCount: action.totalUsersCount
             }
         default:
             return state;
@@ -91,9 +84,24 @@ export const unfollowAC = (userId: number): UnFollowACType => {
         userId,
     };
 };
-export const setUsersAC = (users: Array<UserType>): SetUsersAC => {
+export const setUsersAC = (users: Array<UserType>): SetUsersACT => {
     return {
         type: SET_USERS,
         users
     }
+
+}
+export const setCurrentPageAC = (currentPage: number): SetCurrentPageACT => {
+    return {
+        type: SET_CURRENT_PAGE,
+        currentPage
+    }
+
+}
+export const setUsersTotalCountAC = (totalUsersCount: number): SetTotalUsersCountACT => {
+    return {
+        type: SET_TOTAL_USERS_COUNT,
+        totalUsersCount
+    }
+
 }
