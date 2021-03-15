@@ -19,6 +19,7 @@ export type UsersPageDataType = {
     pageSize: number,
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 };
 // /Main Types
 
