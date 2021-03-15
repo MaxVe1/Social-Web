@@ -2,8 +2,7 @@ import React from "react";
 import { UserType } from "../../redux/entities";
 import s from "./Users.module.css";
 import userPhoto from "../../assets/images/userpng.png";
-import axios from "axios";
-import { log } from "util";
+//import axios from "axios";
 
 type UsersPropsType = {
     users: Array<UserType>;
@@ -15,34 +14,13 @@ type UsersPropsType = {
     setUsers: (users: Array<UserType>) => void;
     setCurrentPage: (pageNumber: number) => void;
     setTotalUsersCount: (totalUsersCount: number) => void;
+    onPageChanged: (pageNumber: number) => void;
 };
 
-export class Users extends React.Component<UsersPropsType> {
-    componentDidMount() {
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
-            )
-            .then((response) => {
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
-            });
-    }
+export const Users: React.FC<UsersPropsType> = (props) => {
 
-    componentDidUpdate() {
-        console.log("Did Update");
-    }
 
-    onPageChanged = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then((response) => {
-                this.props.setUsers(response.data.items);
-            });
-    };
-
-    calcPagination = (pages: Array<number>, current: number) => {
+    const calcPagination = (pages: Array<number>, current: number) => {
         let last = pages.length,
             delta = 2,
             left = current - delta,
@@ -73,15 +51,15 @@ export class Users extends React.Component<UsersPropsType> {
         return rangeWithDots;
     };
 
-    renderPagination = (pagesArr: Array<number | string>) => {
+    const renderPagination = (pagesArr: Array<number | string>) => {
         return pagesArr.map((p) => {
             return (
                 <>
                     <span
                         onClick={() => {
-                            typeof p === 'number' && this.onPageChanged(p);
+                            typeof p === "number" && props.onPageChanged(p);
                         }}
-                        className={this.props.currentPage === p ? s.selectedPage : ""}
+                        className={props.currentPage === p ? s.selectedPage : ""}
                     >
                         {p}
                     </span>
@@ -90,7 +68,7 @@ export class Users extends React.Component<UsersPropsType> {
         });
     };
 
-    renderUsers = (usersArr: Array<UserType>) => {
+    const renderUsers = (usersArr: Array<UserType>) => {
         return usersArr.map((u) => {
             return (
                 <div key={u.id}>
@@ -102,7 +80,7 @@ export class Users extends React.Component<UsersPropsType> {
                             {u.followed ? (
                                 <button
                                     onPointerDown={() => {
-                                        this.props.unfollow(u.id);
+                                        props.unfollow(u.id);
                                     }}
                                 >
                                     Unfollow
@@ -110,7 +88,7 @@ export class Users extends React.Component<UsersPropsType> {
                             ) : (
                                 <button
                                     onPointerDown={() => {
-                                        this.props.follow(u.id);
+                                        props.follow(u.id);
                                     }}
                                 >
                                     Follow
@@ -133,24 +111,18 @@ export class Users extends React.Component<UsersPropsType> {
         });
     };
 
-    render() {
-        const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
-        const pages: Array<number> = [];
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-        }
-        const visiblePages = this.calcPagination(pages, this.props.currentPage);
-
-        return (
-            <div>
-                <div className={s.pagesWrapper}>
-                    {this.renderPagination(visiblePages)}
-                </div>
-                {this.renderUsers(this.props.users)}
-                <div className={s.pagesWrapper}>
-                    {this.renderPagination(visiblePages)}
-                </div>
-            </div>
-        );
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    const pages: Array<number> = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
     }
-}
+    const visiblePages = calcPagination(pages, props.currentPage);
+
+    return (
+        <div>
+            <div className={s.pagesWrapper}>{renderPagination(visiblePages)}</div>
+            {renderUsers(props.users)}
+            <div className={s.pagesWrapper}>{renderPagination(visiblePages)}</div>
+        </div>
+    );
+};
