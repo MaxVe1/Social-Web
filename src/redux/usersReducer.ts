@@ -22,7 +22,7 @@ type SetTotalUsersCountACT = {
 };
 type ToggleIsFetchingACT = {
     type: typeof TOGGLE_IS_FETCHING;
-    isFetching: boolean
+    isFetching: boolean;
 };
 
 type ActionsType =
@@ -85,37 +85,37 @@ export const usersReducer = (state: UsersPageDataType = initialState, action: Ac
     }
 };
 
-export const followAC = (userId: number): FollowACT => {
+export const follow = (userId: number): FollowACT => {
     return {
         type: FOLLOW,
         userId
     };
 };
-export const unfollowAC = (userId: number): UnFollowACT => {
+export const unfollow = (userId: number): UnFollowACT => {
     return {
         type: UNFOLLOW,
         userId
     };
 };
-export const setUsersAC = (users: Array<UserType>): SetUsersACT => {
+export const setUsers = (users: Array<UserType>): SetUsersACT => {
     return {
         type: SET_USERS,
         users
     };
 };
-export const setCurrentPageAC = (currentPage: number): SetCurrentPageACT => {
+export const setCurrentPage = (currentPage: number): SetCurrentPageACT => {
     return {
         type: SET_CURRENT_PAGE,
         currentPage
     };
 };
-export const setUsersTotalCountAC = (totalUsersCount: number): SetTotalUsersCountACT => {
+export const setTotalUsersCount = (totalUsersCount: number): SetTotalUsersCountACT => {
     return {
         type: SET_TOTAL_USERS_COUNT,
         totalUsersCount
     };
 };
-export const setIsFetchingAC = (isFetching: boolean): ToggleIsFetchingACT => {
+export const setIsFetching = (isFetching: boolean): ToggleIsFetchingACT => {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching
