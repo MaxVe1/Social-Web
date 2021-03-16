@@ -15,19 +15,19 @@ type UsersPropsType = {
     setUsers: (users: Array<UserType>) => void;
     setCurrentPage: (pageNumber: number) => void;
     setTotalUsersCount: (totalUsersCount: number) => void;
-    toggleIsFetching: (isFetching: boolean) => void;
+    setIsFetching: (isFetching: boolean) => void;
     isFetching: boolean;
 };
 
 export class UsersAPIComponent extends React.Component<UsersPropsType> {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
+        this.props.setIsFetching(true);
         axios
             .get(
                 `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
             )
             .then((response) => {
-                this.props.toggleIsFetching(false);
+                this.props.setIsFetching(false);
                 this.props.setUsers(response.data.items);
                 this.props.setTotalUsersCount(response.data.totalCount);
             });
@@ -39,12 +39,12 @@ export class UsersAPIComponent extends React.Component<UsersPropsType> {
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true);
+        this.props.setIsFetching(true);
 
         axios
             .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then((response) => {
-                this.props.toggleIsFetching(false);
+                this.props.setIsFetching(false);
                 this.props.setUsers(response.data.items);
             });
     };
@@ -66,7 +66,7 @@ export class UsersAPIComponent extends React.Component<UsersPropsType> {
         return (
             <>
                 {isFetching ? (
-                    <Preloader/>
+                    <Preloader />
                 ) : (
                     <Users
                         users={users}
