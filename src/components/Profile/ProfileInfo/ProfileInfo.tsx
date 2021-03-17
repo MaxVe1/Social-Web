@@ -7,7 +7,6 @@ type ProfileInfoPropsT = {
 }
 
 const ProfileInfo: React.FC<ProfileInfoPropsT> = (props) => {
-    console.log(props.profile.contacts)
     if(!props.profile) {
         return <div><Preloader/></div>
     }

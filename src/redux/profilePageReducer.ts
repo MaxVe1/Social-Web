@@ -25,7 +25,8 @@ const initialState = {
         {id: 1, message: 'it is my first post', likes: 11},
         {id: 2, message: 'hi how are you', likes: 12}
     ],
-    newPostText: "it-kamasutra.com"
+    newPostText: "it-kamasutra.com",
+    defaultUserId: 2
 };
 
 export const profilePageReducer = (

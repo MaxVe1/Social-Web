@@ -9,6 +9,7 @@ export type ProfilePageDataType = {
     postsData: Array<PostsDataType>;
     newPostText: string;
     profile: UserProfileItemT;
+    defaultUserId: number
 };
 export type DialogsPageDataType = {
     dialogsData: Array<DialogItemType>;
