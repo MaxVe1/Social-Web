@@ -1,18 +1,16 @@
 import React from "react";
-import { addPostCreator, updateNewPostCreator } from "../../../redux/profilePageReducer";
+import { addPost, updateNewPost } from "../../../redux/profilePageReducer";
 import MyPosts from "./MyPosts";
-import { AppStateType, StoreType } from "../../../redux/reduxStore";
+import { AppStateType} from "../../../redux/reduxStore";
 import { connect } from "react-redux";
-import { PostsDataType, profilePageDataType } from "../../../redux/entities";
-import { Dispatch } from "redux";
+import { PostsDataType } from "../../../redux/entities";
 
 type MapStateType = {
     posts: Array<PostsDataType>;
     newPostText: string;
 };
-
 type MapDispatchType = {
-    updateNewPostText: (param: string) => void;
+    updateNewPost: (param: string) => void;
     addPost: () => void;
 };
 
@@ -24,21 +22,9 @@ const mapStateToProps = (state: AppStateType): MapStateType => {
         newPostText: state.profilePageData.newPostText
     };
 };
-
-
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchType => {
-    return {
-        addPost: () => {
-            dispatch(addPostCreator());
-        },
-        updateNewPostText: (text: string) => {
-            dispatch(updateNewPostCreator(text));
-        }
-    };
-};
-export const MyPostsContainer = connect<MapStateType, MapDispatchType, {}, AppStateType>(
-    mapStateToProps,
-    mapDispatchToProps
-)(MyPosts);
+export const MyPostsContainer = connect<MapStateType, MapDispatchType, {}, AppStateType>(mapStateToProps, {
+    updateNewPost,
+    addPost
+})(MyPosts);
 
 export default MyPostsContainer;

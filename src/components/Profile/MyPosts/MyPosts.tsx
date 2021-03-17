@@ -1,26 +1,24 @@
 import React from "react";
 import Post from "./Post/Post";
 import classes from "./MyPosts.module.css";
-import {PostsDataType} from "../../../redux/entities";
+import { PostsDataType } from "../../../redux/entities";
 
 type MyPostsPropsType = {
     posts: Array<PostsDataType>;
     newPostText: string;
-    updateNewPostText: (param: string) => void
-    addPost: () => void
+    updateNewPost: (param: string) => void;
+    addPost: () => void;
 };
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>();
 
     const onClickAddPost = () => {
-        props.addPost()
+        props.addPost();
     };
     const onPostChangeHandler = () => {
-        const text = newPostElement.current?.value;
-        if (text) {
-            props.updateNewPostText(text);
-        }
+        const text = newPostElement.current?.value || "";
+        props.updateNewPost(text);
     };
 
     return (

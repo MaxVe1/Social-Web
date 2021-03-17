@@ -1,4 +1,13 @@
-import { ActionType, dialogsPageDataType } from "./state";
+import { DialogsPageDataType } from "./entities";
+
+type SendMessageActionType = {
+    type: typeof SEND_MESSAGE;
+};
+type UpdateNewMessageActionType = {
+    type: typeof UPDATE_NEW_MESSAGE_TEXT;
+    newText: string;
+};
+type ActionsType = SendMessageActionType | UpdateNewMessageActionType;
 
 const SEND_MESSAGE = "SEND-MESSAGE";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
@@ -21,39 +30,41 @@ let initialState = {
         newMessageText: ''
     };
 
-export const dialogsPageReducer = (state: dialogsPageDataType=initialState, action: ActionType): dialogsPageDataType => {
-
+export const dialogsPageReducer = (
+    state: DialogsPageDataType = initialState,
+    action: ActionsType
+): DialogsPageDataType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT:
-            const stateCopy={...state};
+        case UPDATE_NEW_MESSAGE_TEXT: {
+            const stateCopy = { ...state };
+
             if (action.newText) {
                 stateCopy.newMessageText = action.newText;
             }
+
             return stateCopy;
+        }
         case SEND_MESSAGE: {
             const newMessage = {
                 id: state.messagesData.length + 1,
                 message: state.newMessageText
             };
-            const stateCopy = { ...state };
-            //{ ...state, messagesData: [...state.messagesData, newMessage], newMessageText: "" };
-            stateCopy.messagesData = [...state.messagesData]
-            stateCopy.messagesData.push(newMessage);
-            stateCopy.newMessageText = "";
-            return stateCopy;
-        }
-        default:
-            return state;
-    }
 
+            return { ...state, messagesData: [...state.messagesData, newMessage], newMessageText: "" };
+        }
+
+        default: {
+            return state;
+        }
+    }
 };
 
-export const sendMessageCreator = (): ActionType => {
+export const sendMessage = (): SendMessageActionType => {
     return {
         type: SEND_MESSAGE
     };
 };
-export const updateNewMessageCreator = (messageText: string): ActionType => {
+export const updateNewMessage = (messageText: string): UpdateNewMessageActionType => {
     return {
         type: UPDATE_NEW_MESSAGE_TEXT,
         newText: messageText

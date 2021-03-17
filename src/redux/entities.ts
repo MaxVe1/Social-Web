@@ -1,27 +1,29 @@
 export type StateType = {
-    profilePageData: profilePageDataType;
-    dialogsPageData: dialogsPageDataType;
+    profilePageData: ProfilePageDataType;
+    dialogsPageData: DialogsPageDataType;
 
 };
 
-//Main Types
-export type profilePageDataType = {
+//! MAIN TYPES
+export type ProfilePageDataType = {
     postsData: Array<PostsDataType>;
     newPostText: string;
+    profile: UserProfileItemT;
 };
-export type dialogsPageDataType = {
+export type DialogsPageDataType = {
     dialogsData: Array<DialogItemType>;
     messagesData: Array<MessageDataType>;
     newMessageText: string;
 };
+
 export type UsersPageDataType = {
     users: Array<UserType>;
-    pageSize: number,
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
+    pageSize: number;
+    totalUsersCount: number;
+    currentPage: number;
+    isFetching: boolean;
 };
-// /Main Types
+//! / MAIN TYPES
 
 export type PostsDataType = {
     id: number;
@@ -38,28 +40,41 @@ export type DialogItemType = {
 
 };
 
-export type ActionType = {
-    type: string;
-    newText?: string;
-};
 
+//! HTTP Request Data types
 export type UserType = {
-    /**id: number;
-    userLogo: string;
-    followed: boolean,
-    fullName: string;
-    status: string;
-    location: UserLocationType;*/
-    "name": string,
-    "id": number,
-    "photos": {
-        "small": string | null,
-        "large": string | null
-    },
-    "status": null,
-    "followed": boolean
+    name: string;
+    id: number;
+    photos: {
+        small: string | null;
+        large: string | null;
+    };
+    status: null;
+    followed: boolean;
 };
 type UserLocationType = {
     city: string;
     country: string;
 };
+export type UserProfileItemT = {
+    aboutMe: string | null;
+    contacts: {
+        facebook: string | null;
+        website: string | null;
+        vk: string | null;
+        twitter: string | null;
+        instagram: string | null;
+        youtube: string | null;
+        github: string | null;
+        mainLink: string | null;
+    };
+    lookingForAJob: boolean;
+    lookingForAJobDescription: string | null;
+    fullName: string | null;
+    userId: number;
+    photos: {
+        small: string;
+        large: string;
+    };
+};
+//! //HTTP Request Data types

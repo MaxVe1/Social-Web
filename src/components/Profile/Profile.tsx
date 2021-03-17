@@ -1,20 +1,18 @@
-import React from 'react';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {StoreType} from "../../redux/reduxStore";
+import React from "react";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {UserProfileItemT} from "../../redux/entities";
 
-
-export type ProfilePropsType = {
-   store: StoreType
+type ProfilePropsT = {
+    profile: UserProfileItemT
 }
 
-const Profile = () => {
+const Profile: React.FC<ProfilePropsT> = (props) => {
     return (
         <main>
-            <ProfileInfo />
-            <MyPostsContainer/>
+            <ProfileInfo profile={props.profile}/>
+             <MyPostsContainer />
         </main>
-
     );
 };
 

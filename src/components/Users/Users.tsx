@@ -74,9 +74,9 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                 <div key={u.id}>
                     <span>
                         <div className={s.userLogo}>
-                           {/*<NavLink to={`/profile/${u.id}`}>*/}
+                           <NavLink to={`/profile/${u.id}`}>
                             <img src={u.photos.small ? u.photos.small : userPhoto} alt="UserLogo" />
-                           {/* //</NavLink>*/}
+                           </NavLink>
                         </div>
                         <div>
                             {u.followed ? (
