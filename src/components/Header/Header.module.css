@@ -7,3 +7,12 @@
 .header img {
     width: 80px;
 }
+
+.loginBlock {
+    float: right;
+    position: relative;
+    //top: 0px;
+}
+.loginBlock a {
+    color:white;
+}

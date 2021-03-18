@@ -78,4 +78,16 @@ export type UserProfileItemT = {
         large: string;
     };
 };
+
+export type AuthT = {
+    "data": {
+        id?: number | null,
+        login?: string | null,
+        email?: string | null
+    },
+    "messages": Array<any>,
+    "fieldsErrors": Array<any>,
+    "resultCode": number,
+    isAuth: boolean
+}
 //! //HTTP Request Data types
