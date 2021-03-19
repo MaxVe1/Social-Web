@@ -3,9 +3,17 @@ import { UserType } from "../../redux/entities";
 import axios from "axios";
 import { Users } from "./Users";
 import { Preloader } from "../common/Preloader/Preloader";
-import {connect} from "react-redux";
-import {AppStateType} from "../../redux/reduxStore";
-import {follow, setCurrentPage, setIsFetching, setTotalUsersCount, setUsers, unfollow} from "../../redux/usersReducer";
+import { connect } from "react-redux";
+import { AppStateType } from "../../redux/reduxStore";
+import {
+    follow,
+    setCurrentPage,
+    setIsFetching,
+    setTotalUsersCount,
+    setUsers,
+    unfollow
+} from "../../redux/usersReducer";
+import { getUsers } from "../../api/api";
 
 type MapStateToPropsT = {
     users: Array<UserType>;
@@ -24,22 +32,15 @@ type MapDispatchToPropsT = {
     setIsFetching: (isFetching: boolean) => void;
 };
 
-
-export class UsersContainer extends React.Component<MapStateToPropsT & MapDispatchToPropsT> {
+class UsersContainer extends React.Component<MapStateToPropsT & MapDispatchToPropsT> {
     componentDidMount() {
         this.props.setIsFetching(true);
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-                {
-                    withCredentials: true
-                }
-            )
-            .then((response) => {
-                this.props.setIsFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
-            });
+        const { currentPage, pageSize } = this.props;
+        getUsers(currentPage, pageSize).then((data) => {
+            this.props.setIsFetching(false);
+            this.props.setUsers(data.items);
+            this.props.setTotalUsersCount(data.totalCount);
+        });
     }
 
     componentDidUpdate() {
@@ -50,14 +51,10 @@ export class UsersContainer extends React.Component<MapStateToPropsT & MapDispat
         this.props.setCurrentPage(pageNumber);
         this.props.setIsFetching(true);
 
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
-                withCredentials: true
-            })
-            .then((response) => {
-                this.props.setIsFetching(false);
-                this.props.setUsers(response.data.items);
-            });
+        getUsers(pageNumber, this.props.pageSize).then((data) => {
+            this.props.setIsFetching(false);
+            this.props.setUsers(data.items);
+        });
     };
 
     render() {

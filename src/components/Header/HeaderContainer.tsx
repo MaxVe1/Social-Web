@@ -3,10 +3,12 @@ import Header from "./Header";
 import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
-import {setAuthUserData, SetAuthUserDataAT} from "../../redux/authReducer";
+import {setAuthUserData, SetAuthUserDataAT, setUserPhoto, SetUserPhotoAT} from "../../redux/authReducer";
+import {authorization, getUserProfile} from "../../api/api";
 
 type HeaderContainerPropsT = {
     setAuthUserData: (id: number, email: string, login: string) => SetAuthUserDataAT
+    setUserPhoto: (photoPath: string) => SetUserPhotoAT
     isAuth: boolean
     login: string | null,
     photoPath: string | null
@@ -14,21 +16,17 @@ type HeaderContainerPropsT = {
 
 class HeaderContainer extends React.Component<HeaderContainerPropsT> {
     componentDidMount() {
-        axios.get("https://social-network.samuraijs.com/api/1.0/auth/me", {
-            withCredentials: true
+        authorization().then(data => {
+            if (data.resultCode === 0) {
+                const {id, email, login} = data.data;
+                this.props.setAuthUserData(id, email, login)
+                return id;
+            }
         })
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    const {id, email, login} = response.data.data;
-                    this.props.setAuthUserData(id, email, login)
-                    return id;
-                }
-            })
             .then(id => {
-                axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
-                    .then(response => {
-                        console.log(response.data.photos.small)
-                    })
+                getUserProfile(id).then(data => {
+                    this.props.setUserPhoto(data.photos.large)
+                })
             })
 
     }
@@ -46,5 +44,5 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {setAuthUserData})(HeaderContainer)
+export default connect(mapStateToProps, {setAuthUserData, setUserPhoto})(HeaderContainer)
 

@@ -3,6 +3,7 @@ import Profile from "./Profile";
 import axios from "axios";
 import { UserProfileItemT } from "../../redux/entities";
 import { RouteComponentProps } from "react-router-dom";
+import { getUserProfile } from "../../api/api";
 
 type ProfileContainerPropsT = {
     setUserProfile: (profile: UserProfileItemT) => void;
@@ -15,16 +16,14 @@ type RouteType = {
 
 export class ProfileContainer extends React.Component<ProfileContainerPropsT & RouteComponentProps<RouteType>> {
     componentDidMount() {
-
         let userId = +this.props.match.params.userId;
 
-        if(!userId) {
+        if (!userId) {
             userId = 2;
         }
 
-
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then((response) => {
-            this.props.setUserProfile(response.data);
+        getUserProfile(userId).then((data) => {
+            this.props.setUserProfile(data);
         });
     }
 
