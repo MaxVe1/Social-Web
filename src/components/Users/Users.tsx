@@ -2,7 +2,8 @@ import React from "react";
 import { UserType } from "../../redux/entities";
 import s from "./Users.module.css";
 import userPhoto from "../../assets/images/userpng.png";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 type UsersPropsType = {
     users: Array<UserType>;
@@ -18,8 +19,6 @@ type UsersPropsType = {
 };
 
 export const Users: React.FC<UsersPropsType> = (props) => {
-
-
     const calcPagination = (pages: Array<number>, current: number) => {
         let last = pages.length,
             delta = 2,
@@ -74,15 +73,26 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                 <div key={u.id}>
                     <span>
                         <div className={s.userLogo}>
-                           <NavLink to={`/profile/${u.id}`}>
-                            <img src={u.photos.small ? u.photos.small : userPhoto} alt="UserLogo" />
-                           </NavLink>
+                            <NavLink to={`/profile/${u.id}`}>
+                                <img src={u.photos.small ? u.photos.small : userPhoto} alt="UserLogo" />
+                            </NavLink>
                         </div>
                         <div>
                             {u.followed ? (
                                 <button
                                     onPointerDown={() => {
-                                        props.unfollow(u.id);
+                                        axios
+                                            .delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "98ca0a48-2755-4c64-8a17-87fb70df4a7a"
+                                                }
+                                            })
+                                            .then((response) => {
+                                                if (response.data.resultCode === 0) {
+                                                    props.unfollow(u.id);
+                                                }
+                                            });
                                     }}
                                 >
                                     Unfollow
@@ -90,6 +100,22 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                             ) : (
                                 <button
                                     onPointerDown={() => {
+                                        axios
+                                            .post(
+                                                `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                                {},
+                                                {
+                                                    withCredentials: true,
+                                                    headers: {
+                                                        "API-KEY": "98ca0a48-2755-4c64-8a17-87fb70df4a7a"
+                                                    }
+                                                }
+                                            )
+                                            .then((response) => {
+                                                if (response.data.resultCode === 0) {
+                                                    props.follow(u.id);
+                                                }
+                                            });
                                         props.follow(u.id);
                                     }}
                                 >
