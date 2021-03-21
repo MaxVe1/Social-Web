@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css'
-import { SetAuthUserDataAT } from "../../redux/authReducer";
+//import { SetAuthUserDataAT } from "../../redux/authReducer";
 
 type HeaderPropsT = {
     isAuth: boolean;

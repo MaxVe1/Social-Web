@@ -24,6 +24,11 @@ type ToggleIsFetchingACT = {
     type: typeof TOGGLE_IS_FETCHING;
     isFetching: boolean;
 };
+type ToggleIsFollowingProgressACT = {
+    type: typeof TOGGLE_IS_FOLLOWING_PROGRESS;
+    followingInProgress: boolean;
+    userId: number
+};
 
 type ActionsType =
     | FollowACT
@@ -31,22 +36,26 @@ type ActionsType =
     | SetUsersACT
     | SetCurrentPageACT
     | SetTotalUsersCountACT
-    | ToggleIsFetchingACT;
+    | ToggleIsFetchingACT
+    | ToggleIsFollowingProgressACT;
 
 const initialState: UsersPageDataType = {
     users: [],
     pageSize: 100,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingInProgress: false,
+    followingUsers: []
 };
 
-const FOLLOW: "FOLLOW" = "FOLLOW";
-const UNFOLLOW: "UNFOLLOW" = "UNFOLLOW";
-const SET_USERS: "SET-USERS" = "SET-USERS";
-const SET_CURRENT_PAGE: "SET-CURRENT-PAGE" = "SET-CURRENT-PAGE";
-const SET_TOTAL_USERS_COUNT: "SET-TOTAL-USERS-COUNT" = "SET-TOTAL-USERS-COUNT";
-const TOGGLE_IS_FETCHING: "TOGGLE-IS-FETCHING" = "TOGGLE-IS-FETCHING";
+const FOLLOW = "FOLLOW";
+const UNFOLLOW = "UNFOLLOW";
+const SET_USERS = "SET-USERS";
+const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
+const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
+const TOGGLE_IS_FETCHING = "TOGGLE-IS-FETCHING";
+const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE-IS-FOLLOWING-PROGRESS";
 
 export const usersReducer = (state: UsersPageDataType = initialState, action: ActionsType): UsersPageDataType => {
     switch (action.type) {
@@ -80,6 +89,11 @@ export const usersReducer = (state: UsersPageDataType = initialState, action: Ac
                 ...state,
                 isFetching: action.isFetching
             };
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {...state,  followingUsers: action.followingInProgress
+                    ? [...state.followingUsers, action.userId]
+                    : state.followingUsers.filter(id => id !== action.userId)
+            }
         default:
             return state;
     }
@@ -119,5 +133,12 @@ export const setIsFetching = (isFetching: boolean): ToggleIsFetchingACT => {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching
+    };
+};
+export const toggleFollowingProgress = (followingInProgress: boolean, userId: number): ToggleIsFollowingProgressACT => {
+    return {
+        type: TOGGLE_IS_FOLLOWING_PROGRESS,
+        followingInProgress,
+        userId
     };
 };

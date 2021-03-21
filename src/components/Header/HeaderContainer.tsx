@@ -3,12 +3,12 @@ import Header from "./Header";
 import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
-import {setAuthUserData, SetAuthUserDataAT, setUserPhoto, SetUserPhotoAT} from "../../redux/authReducer";
+import {setAuthUserData, setUserPhoto} from "../../redux/authReducer";
 import {authorization, getUserProfile} from "../../api/api";
 
 type HeaderContainerPropsT = {
-    setAuthUserData: (id: number, email: string, login: string) => SetAuthUserDataAT
-    setUserPhoto: (photoPath: string) => SetUserPhotoAT
+    setAuthUserData: (id: number, email: string, login: string) => void
+    setUserPhoto: (photoPath: string) => void
     isAuth: boolean
     login: string | null,
     photoPath: string | null
