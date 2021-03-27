@@ -1,9 +1,8 @@
 import React from "react";
 import Profile from "./Profile";
-import axios from "axios";
 import { UserProfileItemT } from "../../redux/entities";
 import { RouteComponentProps } from "react-router-dom";
-import { getUserProfile } from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 type ProfileContainerPropsT = {
     setUserProfile: (profile: UserProfileItemT) => void;
@@ -22,7 +21,7 @@ export class ProfileContainer extends React.Component<ProfileContainerPropsT & R
             userId = 2;
         }
 
-        getUserProfile(userId).then((data) => {
+        usersAPI.getUserProfile(userId).then((data) => {
             this.props.setUserProfile(data);
         });
     }
