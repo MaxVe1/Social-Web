@@ -1,4 +1,7 @@
 import { AuthT, DialogsPageDataType } from "./entities";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "./reduxStore";
+import { usersAPI } from "../api/api";
 
 export type SetAuthUserDataAT = {
     type: typeof SET_USER_DATA;
@@ -20,6 +23,8 @@ const SET_USER_PHOTO = "SET-USER-PHOTO";
 
 type ActionsType = SetAuthUserDataAT | SetUserPhotoAT;
 
+type authReducerThunkT<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionsType>;
+
 export type InitialStateType = {
     data: UserDataT;
     isAuth: boolean;
@@ -38,7 +43,7 @@ const initialState: InitialStateType = {
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case "SET-USER-DATA": {
+        case SET_USER_DATA: {
             return {
                 ...state,
                 data: { ...action.data },
@@ -46,7 +51,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
             };
         }
         case SET_USER_PHOTO: {
-            return { ...state, photoPath: action.photoPath};
+            return { ...state, photoPath: action.photoPath };
         }
         default: {
             return state;
@@ -54,6 +59,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
     }
 };
 
+// * Actions
 export const setAuthUserData = (id: number, email: string, login: string): SetAuthUserDataAT => {
     return {
         type: SET_USER_DATA,
@@ -70,3 +76,23 @@ export const setUserPhoto = (photoPath: string): SetUserPhotoAT => {
         photoPath
     };
 };
+// * /Actions
+
+// * Thunks
+export const authUser = (): authReducerThunkT => (dispatch) => {
+    usersAPI
+        .authorization()
+        .then((data) => {
+            if (data.resultCode === 0) {
+                const { id, email, login } = data.data;
+                dispatch(setAuthUserData(id, email, login));
+                return id;
+            }
+        })
+        .then((id) => {
+            usersAPI.getUserProfile(id).then((data) => {
+                dispatch(setUserPhoto(data.photos.large));
+            });
+        });
+};
+// * /Thunks

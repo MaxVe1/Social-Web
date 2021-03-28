@@ -49,18 +49,17 @@ export const Users: React.FC<UsersPropsType> = (props) => {
     };
 
     const renderPagination = (pagesArr: Array<number | string>) => {
-        return pagesArr.map((p) => {
+        return pagesArr.map((p, i) => {
             return (
-                <>
-                    <span
-                        onClick={() => {
-                            typeof p === "number" && props.onPageChanged(p);
-                        }}
-                        className={props.currentPage === p ? s.selectedPage : ""}
-                    >
-                        {p}
-                    </span>
-                </>
+                <span
+                    key={i}
+                    onClick={() => {
+                        typeof p === "number" && props.onPageChanged(p);
+                    }}
+                    className={props.currentPage === p ? s.selectedPage : ""}
+                >
+                    {p}
+                </span>
             );
         });
     };

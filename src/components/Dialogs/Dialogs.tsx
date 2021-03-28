@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useContext } from "react";
+import React, { ChangeEvent} from "react";
 import { Message } from "./Message/Message";
 import { DialogItem } from "./DialogItem/DialogItem";
 import classes from "./Dialogs.module.css";
 import { DialogsPageDataType } from "../../redux/entities";
-import { sendMessage } from "../../redux/dialogsPageReducer";
 
 type DialogsPropsType = {
     updateNewMessage: (value: string) => void;
@@ -24,7 +23,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         <div className={classes.dialog}>
             <div className={classes.dialogItems}>
                 {dialogsData.map((dialog) => (
-                    <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}  />
+                    <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}   />
                 ))}
             </div>
 

@@ -2,10 +2,13 @@ import React from "react";
 import Profile from "./Profile";
 import { UserProfileItemT } from "../../redux/entities";
 import { RouteComponentProps } from "react-router-dom";
-import {usersAPI} from "../../api/api";
+import {AppStateType} from "../../redux/reduxStore";
+import {connect} from "react-redux";
+import {getUserProfile} from "../../redux/profilePageReducer";
+import {withRouter} from "react-router";
 
 type ProfileContainerPropsT = {
-    setUserProfile: (profile: UserProfileItemT) => void;
+    getUserProfile: (userId: number) => void;
     profile: UserProfileItemT;
     defaultUserId: number;
 };
@@ -13,7 +16,7 @@ type RouteType = {
     userId: string;
 };
 
-export class ProfileContainer extends React.Component<ProfileContainerPropsT & RouteComponentProps<RouteType>> {
+class ProfileContainer extends React.Component<ProfileContainerPropsT & RouteComponentProps<RouteType>> {
     componentDidMount() {
         let userId = +this.props.match.params.userId;
 
@@ -21,12 +24,24 @@ export class ProfileContainer extends React.Component<ProfileContainerPropsT & R
             userId = 2;
         }
 
-        usersAPI.getUserProfile(userId).then((data) => {
-            this.props.setUserProfile(data);
-        });
+        this.props.getUserProfile(userId)
     }
 
     render() {
         return <Profile {...this.props} profile={this.props.profile} />;
     }
 }
+
+type mapStateToPropsT = {
+    profile: UserProfileItemT
+    defaultUserId: number
+}
+
+const mapStateToProps = (state: AppStateType): mapStateToPropsT  => {
+    return {
+        profile: state.profilePageData.profile,
+        defaultUserId: state.profilePageData.defaultUserId
+    };
+};
+
+export default connect(mapStateToProps, { getUserProfile })(withRouter(ProfileContainer));

@@ -1,4 +1,7 @@
 import { ProfilePageDataType, UserProfileItemT } from "./entities";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./reduxStore";
+import {usersAPI} from "../api/api";
 
 type AddPostActionType = {
     type: typeof ADD_POST;
@@ -14,18 +17,20 @@ type SetUserProfileT = {
 
 type ActionsType = AddPostActionType | UpdateNewPostActionType | SetUserProfileT;
 
+type ProfilePageReducerThunkT<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionsType>;
+
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 
-
 const initialState = {
     profile: {} as UserProfileItemT,
     postsData: [
-        {id: 1, message: 'it is my first post', likes: 11},
-        {id: 2, message: 'hi how are you', likes: 12}
+        { id: 1, message: "Good day", likes: 15 },
+        { id: 2, message: "Nice weather", likes: 6 },
+        { id: 3, message: "I was in Rome!!!!", likes: 0 }
     ],
-    newPostText: "it-kamasutra.com",
+    newPostText: "",
     defaultUserId: 2
 };
 
@@ -61,6 +66,7 @@ export const profilePageReducer = (
     }
 };
 
+// * Action creators
 export const addPost = (): AddPostActionType => {
     return {
         type: ADD_POST
@@ -78,3 +84,12 @@ export const setUserProfile = (profile: UserProfileItemT): SetUserProfileT => {
         profile
     };
 };
+// * //Action creators
+
+// * Thunks
+export const getUserProfile = (userId: number):ProfilePageReducerThunkT => dispatch => {
+    usersAPI.getUserProfile(userId).then((data) => {
+        dispatch(setUserProfile(data));
+    });
+}
+// * Thunks

@@ -4,7 +4,7 @@ import { Users } from "./Users";
 import { Preloader } from "../common/Preloader/Preloader";
 import { connect } from "react-redux";
 import { AppStateType } from "../../redux/reduxStore";
-import { follow, getUsers, setTotalUsersCount, unfollow } from "../../redux/usersReducer";
+import { follow, getUsers, setTotalUsersCount, toggleFollowingProgress, unfollow } from "../../redux/usersReducer";
 
 type MapStateToPropsT = {
     users: Array<UserType>;
