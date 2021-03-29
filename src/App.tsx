@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import LoginPage from "./components/Login/Login";
 
 const App: React.FC = () => {
     return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
                 <Route path="/music" component={Music} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/users" render={() => <UsersContainer/>} />
+                <Route path="/login" render={() => <LoginPage/>} />
             </div>
         </div>
     );

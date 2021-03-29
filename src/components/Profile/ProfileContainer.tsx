@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import { UserProfileItemT } from "../../redux/entities";
-import { RouteComponentProps } from "react-router-dom";
+import {Redirect, RouteComponentProps } from "react-router-dom";
 import {AppStateType} from "../../redux/reduxStore";
 import {connect} from "react-redux";
 import {getUserProfile} from "../../redux/profilePageReducer";
@@ -11,6 +11,7 @@ type ProfileContainerPropsT = {
     getUserProfile: (userId: number) => void;
     profile: UserProfileItemT;
     defaultUserId: number;
+    isAuth: boolean
 };
 type RouteType = {
     userId: string;
@@ -28,6 +29,8 @@ class ProfileContainer extends React.Component<ProfileContainerPropsT & RouteCom
     }
 
     render() {
+        if(!this.props.isAuth) return <Redirect to={'/login'}/>
+
         return <Profile {...this.props} profile={this.props.profile} />;
     }
 }
@@ -35,12 +38,14 @@ class ProfileContainer extends React.Component<ProfileContainerPropsT & RouteCom
 type mapStateToPropsT = {
     profile: UserProfileItemT
     defaultUserId: number
+    isAuth: boolean
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsT  => {
     return {
         profile: state.profilePageData.profile,
-        defaultUserId: state.profilePageData.defaultUserId
+        defaultUserId: state.profilePageData.defaultUserId,
+        isAuth: state.auth.isAuth
     };
 };
 
