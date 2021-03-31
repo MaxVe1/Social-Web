@@ -5,6 +5,7 @@ import { Preloader } from "../common/Preloader/Preloader";
 import { connect } from "react-redux";
 import { AppStateType } from "../../redux/reduxStore";
 import { follow, getUsers, setTotalUsersCount, toggleFollowingProgress, unfollow } from "../../redux/usersReducer";
+import { AuthRedirect } from "../HOC/AuthRedirect";
 
 type MapStateToPropsT = {
     users: Array<UserType>;
@@ -85,4 +86,4 @@ export default connect<MapStateToPropsT, MapDispatchToPropsT, {}, AppStateType>(
     follow,
     unfollow,
     getUsers
-})(UsersContainer);
+})(AuthRedirect(UsersContainer));
