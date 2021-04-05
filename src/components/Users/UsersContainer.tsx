@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { AppStateType } from "../../redux/reduxStore";
 import { follow, getUsers, setTotalUsersCount, toggleFollowingProgress, unfollow } from "../../redux/usersReducer";
 import { AuthRedirect } from "../HOC/AuthRedirect";
+import { compose } from "redux";
 
 type MapStateToPropsT = {
     users: Array<UserType>;
@@ -82,8 +83,18 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsT => {
     };
 };
 
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        follow,
+        unfollow,
+        getUsers
+    }),
+    AuthRedirect
+)(UsersContainer)
+
+/*
 export default connect<MapStateToPropsT, MapDispatchToPropsT, {}, AppStateType>(mapStateToProps, {
     follow,
     unfollow,
     getUsers
-})(AuthRedirect(UsersContainer));
+})(AuthRedirect(UsersContainer));*/
