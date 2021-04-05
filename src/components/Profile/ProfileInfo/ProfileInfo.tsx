@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./ProfileInfo.module.css";
 import {UserProfileItemT} from "../../../redux/entities";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 type ProfileInfoPropsT = {
     profile: UserProfileItemT
 }
@@ -12,13 +13,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsT> = (props) => {
     }
     return (
         <div>
-            <div>
-                <img
-                    className={classes.imgHolder}
-                    src="https://cdn.cnn.com/cnnnext/dam/assets/181010131059-australia-best-beaches-cossies-beach-cocos3.jpg"
-                    alt="Background personal"
-                />
-            </div>
+            <ProfileStatus status={"Hello my friends"}/>
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos?.large ? props.profile.photos.large : ""} alt="LargeUserPhoto"/>
                 <ul>
