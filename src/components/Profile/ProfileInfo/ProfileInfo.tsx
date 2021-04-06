@@ -3,6 +3,7 @@ import classes from "./ProfileInfo.module.css";
 import {UserProfileItemT} from "../../../redux/entities";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
+
 type ProfileInfoPropsT = {
     profile: UserProfileItemT
     status: string;
@@ -10,14 +11,14 @@ type ProfileInfoPropsT = {
 }
 
 const ProfileInfo: React.FC<ProfileInfoPropsT> = (props) => {
-    if(!props.profile) {
+    if (!props.profile) {
         return <div><Preloader/></div>
     }
     const {status} = props;
 
     return (
         <div>
-            <ProfileStatus status={status}/>
+            <ProfileStatus status={status} updateUserStatus={props.updateUserStatus}/>
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos?.large ? props.profile.photos.large : ""} alt="LargeUserPhoto"/>
                 <ul>
@@ -27,7 +28,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsT> = (props) => {
                     <li>{props.profile.lookingForAJobDescription}</li>
                 </ul>
                 <div>Contacts:
-                    { props.profile.contacts && Object.entries(props.profile.contacts).map(value => {
+                    {props.profile.contacts && Object.entries(props.profile.contacts).map(value => {
                         return value[1] && <div><a href={value[1]}>{value[0]}</a></div>
                     })}
                 </div>

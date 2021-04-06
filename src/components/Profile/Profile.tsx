@@ -1,4 +1,3 @@
-
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
@@ -15,7 +14,7 @@ const Profile: React.FC<ProfilePropsT> = (props) => {
     return (
         <main>
             <ProfileInfo profile={profile} status={status} updateUserStatus={updateUserStatus}/>
-            <MyPostsContainer />
+            <MyPostsContainer/>
         </main>
     );
 };

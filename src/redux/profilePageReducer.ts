@@ -1,4 +1,4 @@
-import { ProfilePageDataType, UserProfileItemT } from "./entities";
+import {ProfilePageDataType, UserProfileItemT} from "./entities";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./reduxStore";
 import {profileAPI} from "../api/api";
@@ -32,9 +32,9 @@ const SET_STATUS = "SET-STATUS";
 const initialState = {
     profile: {} as UserProfileItemT,
     postsData: [
-        { id: 1, message: "Good day", likes: 15 },
-        { id: 2, message: "Nice weather", likes: 6 },
-        { id: 3, message: "I was in Rome!!!!", likes: 0 }
+        {id: 1, message: "Good day", likes: 15},
+        {id: 2, message: "Nice weather", likes: 6},
+        {id: 3, message: "I was in Rome!!!!", likes: 0}
     ],
     newPostText: "",
     defaultUserId: 2,
@@ -53,11 +53,11 @@ export const profilePageReducer = (
                 likes: 0
             };
 
-            return { ...state, postsData: [...state.postsData, newPost], newPostText: "" };
+            return {...state, postsData: [...state.postsData, newPost], newPostText: ""};
         }
 
         case UPDATE_NEW_POST_TEXT: {
-            const stateCopy = { ...state };
+            const stateCopy = {...state};
             stateCopy.newPostText = action.newText;
             return stateCopy;
         }
@@ -101,27 +101,25 @@ export const setStatus = (status: string): SetStatusT => {
 // * //Action creators
 
 // * Thunks
-export const getUserProfile = (userId: number):ProfilePageReducerThunkT => dispatch => {
+export const getUserProfile = (userId: number): ProfilePageReducerThunkT => dispatch => {
     profileAPI.getUserProfile(userId).then((data) => {
         dispatch(setUserProfile(data));
     });
 }
 
-export const getUserStatus = (userId: number):ProfilePageReducerThunkT => dispatch => {
+export const getUserStatus = (userId: number): ProfilePageReducerThunkT => dispatch => {
     profileAPI.getStatus(userId).then((data) => {
-        console.log(data)
         dispatch(setStatus(data));
     });
 }
 
-export const updateUserStatus = (status: string):ProfilePageReducerThunkT => dispatch => {
+export const updateUserStatus = (status: string): ProfilePageReducerThunkT => dispatch => {
     profileAPI.updateStatus(status).then((data) => {
-        if(data.data.resultCode === 0) {
-            dispatch(setStatus(data.data));
+        if (data.data.resultCode === 0) {
+            dispatch(setStatus(status));
         }
     });
 }
-
 
 
 // * Thunks
