@@ -1,19 +1,21 @@
 import React from "react";
 import Profile from "./Profile";
 import { UserProfileItemT } from "../../redux/entities";
-import {Redirect, RouteComponentProps } from "react-router-dom";
-import {AppStateType} from "../../redux/reduxStore";
-import {connect} from "react-redux";
-import {getUserProfile} from "../../redux/profilePageReducer";
-import {withRouter} from "react-router";
+import { RouteComponentProps } from "react-router-dom";
+import { AppStateType } from "../../redux/reduxStore";
+import { connect } from "react-redux";
+import {getUserProfile, getUserStatus, updateUserStatus} from "../../redux/profilePageReducer";
+import { withRouter } from "react-router";
 import { AuthRedirect } from "../HOC/AuthRedirect";
 import { compose } from "redux";
 
 type ProfileContainerPropsT = {
     getUserProfile: (userId: number) => void;
+    getUserStatus: (userId: number) => void;
+    updateUserStatus: (status: string) => void;
     profile: UserProfileItemT;
     defaultUserId: number;
-    //isAuth: boolean
+    status: string;
 };
 type RouteType = {
     userId: string;
@@ -26,31 +28,30 @@ class ProfileContainer extends React.Component<ProfileContainerPropsT & RouteCom
         if (!userId) {
             userId = 2;
         }
-
-        this.props.getUserProfile(userId)
+        this.props.getUserProfile(userId);
+        this.props.getUserStatus(userId)
     }
 
     render() {
-       // if(!this.props.isAuth) return <Redirect to={'/login'}/>
-
-        return <Profile {...this.props} profile={this.props.profile} />;
+        const {profile, status, updateUserStatus} = this.props;
+        return <Profile {...this.props} profile={profile} status={status} updateUserStatus={updateUserStatus}/>;
     }
 }
 
 type mapStateToPropsT = {
-    profile: UserProfileItemT
-    defaultUserId: number
-    //isAuth: boolean
-}
+    profile: UserProfileItemT;
+    defaultUserId: number;
+    status: string
+};
 
-const mapStateToProps = (state: AppStateType): mapStateToPropsT  => {
+const mapStateToProps = (state: AppStateType): mapStateToPropsT => {
     return {
         profile: state.profilePageData.profile,
         defaultUserId: state.profilePageData.defaultUserId,
-        //isAuth: state.auth.isAuth
+        status: state.profilePageData.status
     };
 };
 
-export default compose<React.ComponentType>(connect(mapStateToProps, { getUserProfile }), withRouter, AuthRedirect)(ProfileContainer);
+export default compose<React.ComponentType>(connect(mapStateToProps, { getUserProfile, getUserStatus, updateUserStatus }), withRouter, /*AuthRedirect*/)(ProfileContainer);
 
-//export default connect(mapStateToProps, { getUserProfile })(AuthRedirect(withRouter(ProfileContainer)));
+// export default connect(mapStateToProps, { getUserProfile })(withRouter(AuthRedirect(ProfileContainer)));

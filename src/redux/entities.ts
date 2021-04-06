@@ -1,7 +1,7 @@
 export type StateType = {
     profilePageData: ProfilePageDataType;
     dialogsPageData: DialogsPageDataType;
-
+    sidebar: SidebarType;
 };
 
 //! MAIN TYPES
@@ -9,14 +9,17 @@ export type ProfilePageDataType = {
     postsData: Array<PostsDataType>;
     newPostText: string;
     profile: UserProfileItemT;
-    defaultUserId: number
+    defaultUserId: number;
+    status: string
 };
 export type DialogsPageDataType = {
     dialogsData: Array<DialogItemType>;
     messagesData: Array<MessageDataType>;
     newMessageText: string;
 };
-
+export type SidebarType = {
+    friends: Array<FriendsItemType>;
+};
 export type UsersPageDataType = {
     users: Array<UserType>;
     pageSize: number;
@@ -26,6 +29,17 @@ export type UsersPageDataType = {
     followingInProgress: boolean;
     followingUsers: Array<number>
 };
+export type AuthT = {
+    "data": {
+        id?: number | null,
+        login?: string | null,
+        email?: string | null
+    },
+    "messages": Array<any>,
+    "fieldsErrors": Array<any>,
+    "resultCode": number,
+    isAuth: boolean
+}
 //! / MAIN TYPES
 
 export type PostsDataType = {
@@ -40,9 +54,13 @@ export type MessageDataType = {
 export type DialogItemType = {
     name: string;
     id: number;
-
+    logo: string;
 };
-
+export type FriendsItemType = {
+    id: number;
+    name: string;
+    logo: string;
+};
 
 //! HTTP Request Data types
 export type UserType = {
@@ -80,16 +98,4 @@ export type UserProfileItemT = {
         large: string;
     };
 };
-
-export type AuthT = {
-    "data": {
-        id?: number | null,
-        login?: string | null,
-        email?: string | null
-    },
-    "messages": Array<any>,
-    "fieldsErrors": Array<any>,
-    "resultCode": number,
-    isAuth: boolean
-}
 //! //HTTP Request Data types

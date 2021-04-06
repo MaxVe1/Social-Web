@@ -5,15 +5,19 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 type ProfileInfoPropsT = {
     profile: UserProfileItemT
+    status: string;
+    updateUserStatus: (status: string) => void;
 }
 
 const ProfileInfo: React.FC<ProfileInfoPropsT> = (props) => {
     if(!props.profile) {
         return <div><Preloader/></div>
     }
+    const {status} = props;
+
     return (
         <div>
-            <ProfileStatus status={"Hello my friends"}/>
+            <ProfileStatus status={status}/>
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos?.large ? props.profile.photos.large : ""} alt="LargeUserPhoto"/>
                 <ul>
@@ -33,4 +37,3 @@ const ProfileInfo: React.FC<ProfileInfoPropsT> = (props) => {
 };
 
 export default ProfileInfo;
-

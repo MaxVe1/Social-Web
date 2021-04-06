@@ -9,7 +9,6 @@ type DialogsPropsType = {
     updateNewMessage: (value: string) => void;
     sendMessage: () => void;
     dialogsPageData: DialogsPageDataType;
-    //isAuth: boolean;
 };
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -20,13 +19,13 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         props.updateNewMessage(value);
     };
     const onSendBtnClick = () => props.sendMessage();
-    //alert(props.isAuth);
-    //if(!props.isAuth) return <Redirect to={"/login"}/>
+
+
     return (
         <div className={classes.dialog}>
             <div className={classes.dialogItems}>
                 {dialogsData.map((dialog) => (
-                    <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}   />
+                    <DialogItem key={dialog.id} name={dialog.name} id={dialog.id} logo={dialog.logo} />
                 ))}
             </div>
 
@@ -47,4 +46,3 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         </div>
     );
 };
-

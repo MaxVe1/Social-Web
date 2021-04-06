@@ -19,15 +19,39 @@ let initialState = {
             {id: 3, message: 'Yo'},
             {id: 4, message: 'You are welcome'}
         ],
+
         dialogsData: [
-            {id: 1, name: 'Dimych'},
-            {id: 2, name: 'Andrei'},
-            {id: 3, name: 'Sveta'},
-            {id: 4, name: 'Sasha'},
-            {id: 5, name: 'Viktor'},
-            {id: 6, name: 'Valera'}
-        ],
-        newMessageText: ''
+        {
+            id: 1,
+            name: "Dimych",
+            logo:
+                "https://c0.klipartz.com/pngpicture/795/938/gratis-png-cerdo-blanco-grande-caras-divertidas-de-dibujos-animados-s.png"
+        },
+        {
+            id: 2,
+            name: "Andrei",
+            logo:
+                "https://e7.pngegg.com/pngimages/95/869/png-clipart-walrus-santa-claus-drawing-funny-cartoon-faces-s-food-face.png"
+        },
+        {
+            id: 3,
+            name: "Sveta",
+            logo:
+                "https://w7.pngwing.com/pngs/2/519/png-transparent-little-penguin-bird-face-funny-cartoon-faces-s-face-smiley-bird.png"
+        },
+        {
+            id: 4,
+            name: "Viktor",
+            logo: "https://wallpaperaccess.com/full/777162.png"
+        },
+        {
+            id: 5,
+            name: "Valera",
+            logo: "https://funnypicture.org/wallpaper/2015/05/funny-cartoon-faces-28-high-resolution-wallpaper.png"
+        }
+    ],
+    newMessageText: ""
+
     };
 
 export const dialogsPageReducer = (

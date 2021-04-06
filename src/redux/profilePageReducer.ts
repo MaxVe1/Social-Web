@@ -1,7 +1,7 @@
 import { ProfilePageDataType, UserProfileItemT } from "./entities";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./reduxStore";
-import {usersAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 
 type AddPostActionType = {
     type: typeof ADD_POST;
@@ -15,13 +15,19 @@ type SetUserProfileT = {
     profile: UserProfileItemT;
 };
 
-type ActionsType = AddPostActionType | UpdateNewPostActionType | SetUserProfileT;
+type SetStatusT = {
+    type: typeof SET_STATUS
+    status: string
+}
+
+type ActionsType = AddPostActionType | UpdateNewPostActionType | SetUserProfileT | SetStatusT;
 
 type ProfilePageReducerThunkT<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionsType>;
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
+const SET_STATUS = "SET-STATUS";
 
 const initialState = {
     profile: {} as UserProfileItemT,
@@ -31,7 +37,8 @@ const initialState = {
         { id: 3, message: "I was in Rome!!!!", likes: 0 }
     ],
     newPostText: "",
-    defaultUserId: 2
+    defaultUserId: 2,
+    status: ""
 };
 
 export const profilePageReducer = (
@@ -59,7 +66,8 @@ export const profilePageReducer = (
                 ...state,
                 profile: action.profile
             };
-
+        case SET_STATUS:
+            return {...state, status: action.status};
         default: {
             return state;
         }
@@ -84,12 +92,36 @@ export const setUserProfile = (profile: UserProfileItemT): SetUserProfileT => {
         profile
     };
 };
+export const setStatus = (status: string): SetStatusT => {
+    return {
+        type: SET_STATUS,
+        status
+    };
+};
 // * //Action creators
 
 // * Thunks
 export const getUserProfile = (userId: number):ProfilePageReducerThunkT => dispatch => {
-    usersAPI.getUserProfile(userId).then((data) => {
+    profileAPI.getUserProfile(userId).then((data) => {
         dispatch(setUserProfile(data));
     });
 }
+
+export const getUserStatus = (userId: number):ProfilePageReducerThunkT => dispatch => {
+    profileAPI.getStatus(userId).then((data) => {
+        console.log(data)
+        dispatch(setStatus(data));
+    });
+}
+
+export const updateUserStatus = (status: string):ProfilePageReducerThunkT => dispatch => {
+    profileAPI.updateStatus(status).then((data) => {
+        if(data.data.resultCode === 0) {
+            dispatch(setStatus(data.data));
+        }
+    });
+}
+
+
+
 // * Thunks
