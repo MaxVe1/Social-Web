@@ -5,6 +5,7 @@ import { dialogsPageReducer } from "./dialogsPageReducer";
 import { usersReducer } from "./usersReducer";
 import {authReducer} from "./authReducer";
 import thunk from "redux-thunk";
+import { reducer as formReducer} from 'redux-form';
 
 export type StoreType = typeof store;
 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     dialogsPageData: dialogsPageReducer,
     /*sidebar: sidebarReducer,*/
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 });
 
 // type RootReducerType = typeof rootReducer;
