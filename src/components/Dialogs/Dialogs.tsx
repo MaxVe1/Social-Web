@@ -1,25 +1,22 @@
-import React, { ChangeEvent} from "react";
+import React from "react";
 import { Message } from "./Message/Message";
 import { DialogItem } from "./DialogItem/DialogItem";
 import classes from "./Dialogs.module.css";
 import { DialogsPageDataType } from "../../redux/entities";
-import { Redirect } from "react-router-dom";
+import AddMessageForm, { AddMessageFormT } from "./AddMessageForm";
 
 type DialogsPropsType = {
     updateNewMessage: (value: string) => void;
-    sendMessage: () => void;
+    sendMessage: (value: string) => void;
     dialogsPageData: DialogsPageDataType;
 };
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
-    const { dialogsData, messagesData, newMessageText } = props.dialogsPageData;
+    const { dialogsData, messagesData } = props.dialogsPageData;
 
-    const onTextareaChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        const { value } = e.currentTarget;
-        props.updateNewMessage(value);
+    const addNewMessage = (values: AddMessageFormT) => {
+        props.sendMessage(values.newMessageBody);
     };
-    const onSendBtnClick = () => props.sendMessage();
-
 
     return (
         <div className={classes.dialog}>
@@ -34,15 +31,9 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
                     <Message key={message.id} message={message.message} />
                 ))}
             </div>
-
-            <div>
-                <textarea
-                    onChange={onTextareaChangeHandler}
-                    value={newMessageText}
-                    placeholder={"Enter your message..."}
-                />
-                <button onPointerDown={onSendBtnClick}>Send</button>
-            </div>
+            <AddMessageForm onSubmit={addNewMessage} />
         </div>
     );
 };
+
+

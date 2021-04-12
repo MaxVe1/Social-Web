@@ -2,15 +2,12 @@ import { DialogsPageDataType } from "./entities";
 
 type SendMessageActionType = {
     type: typeof SEND_MESSAGE;
+    messageText: string;
 };
-type UpdateNewMessageActionType = {
-    type: typeof UPDATE_NEW_MESSAGE_TEXT;
-    newText: string;
-};
-type ActionsType = SendMessageActionType | UpdateNewMessageActionType;
+
+type ActionsType = SendMessageActionType;
 
 const SEND_MESSAGE = "SEND-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
 
 let initialState = {
         messagesData: [
@@ -49,8 +46,7 @@ let initialState = {
             name: "Valera",
             logo: "https://funnypicture.org/wallpaper/2015/05/funny-cartoon-faces-28-high-resolution-wallpaper.png"
         }
-    ],
-    newMessageText: ""
+    ]
 
     };
 
@@ -59,22 +55,13 @@ export const dialogsPageReducer = (
     action: ActionsType
 ): DialogsPageDataType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            const stateCopy = { ...state };
-
-            if (action.newText) {
-                stateCopy.newMessageText = action.newText;
-            }
-
-            return stateCopy;
-        }
         case SEND_MESSAGE: {
             const newMessage = {
                 id: state.messagesData.length + 1,
-                message: state.newMessageText
+                message: action.messageText
             };
 
-            return { ...state, messagesData: [...state.messagesData, newMessage], newMessageText: "" };
+            return { ...state, messagesData: [...state.messagesData, newMessage] };
         }
 
         default: {
@@ -83,14 +70,9 @@ export const dialogsPageReducer = (
     }
 };
 
-export const sendMessage = (): SendMessageActionType => {
+export const sendMessage = (messageText: string): SendMessageActionType => {
     return {
-        type: SEND_MESSAGE
-    };
-};
-export const updateNewMessage = (messageText: string): UpdateNewMessageActionType => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: messageText
+        type: SEND_MESSAGE,
+        messageText
     };
 };

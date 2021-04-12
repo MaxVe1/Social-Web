@@ -7,7 +7,6 @@ export type StateType = {
 //! MAIN TYPES
 export type ProfilePageDataType = {
     postsData: Array<PostsDataType>;
-    newPostText: string;
     profile: UserProfileItemT;
     defaultUserId: number;
     status: string
@@ -15,7 +14,6 @@ export type ProfilePageDataType = {
 export type DialogsPageDataType = {
     dialogsData: Array<DialogItemType>;
     messagesData: Array<MessageDataType>;
-    newMessageText: string;
 };
 export type SidebarType = {
     friends: Array<FriendsItemType>;
