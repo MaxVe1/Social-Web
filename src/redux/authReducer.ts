@@ -1,11 +1,11 @@
-import { AuthT, DialogsPageDataType } from "./entities";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./reduxStore";
-import {profileAPI, usersAPI} from "../api/api";
+import {authApi, profileAPI} from "../api/api";
 
 export type SetAuthUserDataAT = {
     type: typeof SET_USER_DATA;
-    data: UserDataT;
+    payload: UserDataT;
+    isAuth: boolean
 };
 export type SetUserPhotoAT = {
     type: typeof SET_USER_PHOTO;
@@ -14,8 +14,8 @@ export type SetUserPhotoAT = {
 
 type UserDataT = {
     id: number | null;
-    login: string;
-    email: string;
+    login: string | null;
+    email: string | null;
 };
 
 const SET_USER_DATA = "SET-USER-DATA";
@@ -46,8 +46,8 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
         case SET_USER_DATA: {
             return {
                 ...state,
-                data: { ...action.data },
-                isAuth: true
+                data: { ...action.payload },
+                isAuth: action.isAuth
             };
         }
         case SET_USER_PHOTO: {
@@ -60,13 +60,14 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 };
 
 // * Actions
-export const setAuthUserData = (id: number, email: string, login: string): SetAuthUserDataAT => {
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean): SetAuthUserDataAT => {
     return {
         type: SET_USER_DATA,
-        data: {
+        isAuth,
+        payload: {
             id,
             email,
-            login
+            login,
         }
     };
 };
@@ -80,19 +81,41 @@ export const setUserPhoto = (photoPath: string): SetUserPhotoAT => {
 
 // * Thunks
 export const getAuthUserData = (): authReducerThunkT => (dispatch) => {
-    usersAPI
+    authApi
         .authorization()
         .then((data) => {
             if (data.resultCode === 0) {
                 const { id, email, login } = data.data;
-                dispatch(setAuthUserData(id, email, login));
+                dispatch(setAuthUserData(id, email, login, true));
                 return id;
             }
         })
         .then((id) => {
             profileAPI.getUserProfile(id).then((data) => {
-                dispatch(setUserPhoto(data.photos.large));
+                data && dispatch(setUserPhoto(data.photos.large));
             });
-        });
+        })
 };
+
+export const login = (email: string, password: string, rememberMe: boolean): authReducerThunkT => (dispatch) => {
+    authApi.login(email, password, rememberMe)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }
+        })
+
+};
+
+
+export const logout = (): authReducerThunkT => (dispatch) => {
+    authApi.logout()
+        .then(data => {
+            if (data.data.resultCode === 0) {
+                dispatch(setAuthUserData(null, null, null, false));
+            }
+        })
+
+};
+
 // * /Thunks

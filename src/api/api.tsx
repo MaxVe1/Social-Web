@@ -8,6 +8,26 @@ const instance = axios.create({
     }
 });
 
+export const authApi = {
+    authorization:() => {
+        return instance.get(`auth/me`).then((responce) => responce.data)
+    },
+
+    login: (email: string, password: string, rememberMe: boolean = false) => {
+        return instance
+            .post(`/auth/login`, {
+                email,
+                password,
+                rememberMe
+            })
+            .then((response) => response.data);
+    },
+    logout: () => {
+        return instance.delete(`/auth/login`);
+    }
+};
+
+
 
 export const usersAPI = {
     getUsers: (currentPage: number, pageSize: number) => {
@@ -20,10 +40,10 @@ export const usersAPI = {
 
     unfollowUser: (userId: number) => {
         return instance.delete(`follow/${userId}`).then((response) => response.data);
-    },
+    }/*,
     authorization: () => {
         return instance.get(`auth/me`).then((response) => response.data);
-    }
+    }*/
 }
 
 export const profileAPI = {
