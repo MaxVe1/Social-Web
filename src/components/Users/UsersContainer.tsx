@@ -89,7 +89,7 @@ export default compose<React.ComponentType>(
         unfollow,
         getUsers
     }),
-    AuthRedirect
+    //AuthRedirect
 )(UsersContainer)
 
 /*

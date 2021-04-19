@@ -1,6 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./reduxStore";
 import {authApi, profileAPI} from "../api/api";
+import {FormAction, stopSubmit} from "redux-form";
 
 export type SetAuthUserDataAT = {
     type: typeof SET_USER_DATA;
@@ -23,7 +24,7 @@ const SET_USER_PHOTO = "SET-USER-PHOTO";
 
 type ActionsType = SetAuthUserDataAT | SetUserPhotoAT;
 
-type authReducerThunkT<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionsType>;
+type authReducerThunkT<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionsType | FormAction>;
 
 export type InitialStateType = {
     data: UserDataT;
@@ -80,8 +81,8 @@ export const setUserPhoto = (photoPath: string): SetUserPhotoAT => {
 // * /Actions
 
 // * Thunks
-export const getAuthUserData = (): authReducerThunkT => (dispatch) => {
-    authApi
+export const getAuthUserData = (): authReducerThunkT<Promise<any>> => (dispatch) => {
+    return authApi
         .authorization()
         .then((data) => {
             if (data.resultCode === 0) {
@@ -94,6 +95,7 @@ export const getAuthUserData = (): authReducerThunkT => (dispatch) => {
             profileAPI.getUserProfile(id).then((data) => {
                 data && dispatch(setUserPhoto(data.photos.large));
             });
+
         })
 };
 
@@ -102,8 +104,12 @@ export const login = (email: string, password: string, rememberMe: boolean): aut
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(getAuthUserData())
+            } else {
+                const errorMessage = data.messages.length > 0 ? data.messages[0] : "Some error";
+                dispatch(stopSubmit("login", {_error: errorMessage}))
             }
         })
+        .catch(error => console.error(error))
 
 };
 
