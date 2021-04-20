@@ -153,7 +153,7 @@ export const toggleFollowingProgress = (followingInProgress: boolean, userId: nu
 //* /Action Creators
 
 // * Thunks
-export const getUsers = (currentPage: number, pageSize: number): UserReducerThunkT => (dispatch) => {
+export const requestUsers = (currentPage: number, pageSize: number): UserReducerThunkT => (dispatch) => {
     dispatch(setIsFetching(true));
     dispatch(setCurrentPage(currentPage));
 
